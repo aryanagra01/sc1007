@@ -1,4 +1,7 @@
 # Define operator precedence globally 
+from types import _ReturnT_nd_co
+
+
 PRECEDENCE = {'+': 1, '-': 1, '*': 2, '/': 2, '**': 3}
 
 class Node:
@@ -36,6 +39,20 @@ class Stack:
 
 def in2preS(expr):
 # Write your code here #
+    #convert the expression into a queue
+    q = Queue()
+    for i in expr:
+        q.enqueue(i)
+
+    for _ in range(q.get):
+        _ReturnT_nd_co
+
+    #have a seeprate queue to store the number and extras
+
+    #plusminus is being dequed and queued to the back
+
+
+
 
 if __name__ == "__main__":
     infix = input("Enter infix expression: ")
