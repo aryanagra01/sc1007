@@ -1,0 +1,17 @@
+    A
+   / \
+  B   F
+ / \   \
+C   D   G
+   /
+  E
+
+How you get it
+
+Pre-order starts with A, so A is the root.
+In-order splits at A:
+left subtree: C, B, E, D
+right subtree: F, G
+Next in pre-order is B, so B is the left child of A. In-order around B is C | B | E, D, so C is left of B, and E, D is right of B.
+After B and C, pre-order has D, so D is the right child of B. In-order around D is E | D, so E is left of D.
+Right of A is F. In-order is F, G, so G is right of F.

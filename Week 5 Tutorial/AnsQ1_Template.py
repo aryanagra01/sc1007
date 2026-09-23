@@ -115,7 +115,19 @@ class Queue:
 
 def reverse_stack(stack):
 # Write your code here #
+    if stack.isEmpty():
+        return
 
+    q = Queue()
+    while not stack.isEmpty():
+        trasnfer = stack.pop()
+        q.enqueue(trasnfer)
+    
+    while not q.isEmpty():
+        trasnfer02 = q.dequeue()
+        stack.push(trasnfer02)
+    
+    return
 
 # Main function
 def main():

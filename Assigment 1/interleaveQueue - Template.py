@@ -124,7 +124,12 @@ class Queue:
 
 def interleaveQueue(q):
 # Write your code here #
-    half = q.getSize() // 2
+
+    size  = q.getSize()
+    if size == 0 or size % 2 != 0:
+        return q
+
+    half = size // 2
     s = Stack()
 
     for _ in range(half):

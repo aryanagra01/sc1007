@@ -84,7 +84,25 @@ class Stack:
         return self.ll.size == 0
 
 def sort_stack(stack):
-# Write your code here #
+# Write your code here #    
+    if stack.is_empty():
+        return
+    
+    tempS = Stack()
+
+    while not stack.is_empty():
+        data = stack.pop()
+        while not tempS.is_empty() and data < tempS.peek():
+            stack.push(tempS.pop())
+        tempS.push(data)
+
+    
+    while not tempS.is_empty():
+        stack.push(tempS.pop())
+
+
+
+
 
 def main():
     stack = Stack()

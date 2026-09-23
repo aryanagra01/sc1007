@@ -1,6 +1,3 @@
-# Define operator precedence globally 
-from types import _ReturnT_nd_co
-
 
 PRECEDENCE = {'+': 1, '-': 1, '*': 2, '/': 2, '**': 3}
 
@@ -39,17 +36,39 @@ class Stack:
 
 def in2preS(expr):
 # Write your code here #
-    #convert the expression into a queue
-    q = Queue()
-    for i in expr:
-        q.enqueue(i)
+    operators = Stack()
+    output = Stack()
 
-    for _ in range(q.get):
-        _ReturnT_nd_co
+    for char in expr[::-1]:
 
-    #have a seeprate queue to store the number and extras
+        if char.isalnum():
+            output.push(char)
+        
+        elif char == ")":
+            operators.push(char)
+        elif char == "(":
+            while not operators.isEmpty() and operators.peek() != ")":
+                output.push(operators.peek())
+                operators.pop()
+            if not operators.isEmpty() and operators.peek() == ")":
+                operators.pop()
+        elif char in PRECEDENCE:
 
-    #plusminus is being dequed and queued to the back
+            while (not operators.isEmpty() and 
+            operators.peek() != ")" and
+            (PRECEDENCE[operators.peek()] > PRECEDENCE[char] or
+            (PRECEDENCE[operators.peek()] == PRECEDENCE[char] and char == "**"))):
+                output.push(operators.peek())
+                operators.pop()
+            operators.push(char)
+        
+
+    while not operators.isEmpty():
+        output.push(operators.peek())
+        operators.pop()
+
+    return output
+
 
 
 

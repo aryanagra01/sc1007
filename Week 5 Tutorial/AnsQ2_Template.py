@@ -104,6 +104,19 @@ class Queue:
 
 def reverse_first_k_items(queue, k):
 # Write your code here #
+    if queue.isEmmpty() or k <=0 or k > queue.ll.size:
+        return
+    
+    stack = Stack()
+    for _ in range(k):
+        stack.push(queue.dequeue())
+
+    while not stack.isEmpty():
+        queue.enqueue(stack.pop())
+    
+    for _ in range(queue.ll.size - k):
+        queue.enqueue(queue.dequeue())
+
 
 def main():
     q = Queue()

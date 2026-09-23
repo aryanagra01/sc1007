@@ -105,6 +105,9 @@ def deleteMiddleElement(s):
 # write your code here #
     temp = Stack()
 
+    if s.isEmpty():
+        return
+    
     depth = (s.getSize() // 2)
     for _ in range(depth):
         mover = s.pop()
