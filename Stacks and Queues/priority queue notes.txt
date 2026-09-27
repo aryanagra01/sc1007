@@ -1,0 +1,307 @@
+priority queue notes
+
+step notes: S&Q Applications\overall notes.md
+
+
+TOKENISED
+expr is a list. ["12", "+", "**", "3"]
+for token in expr
+
+
+postfix to infix
+----------------
+
+stack = Stack()
+
+for token in expr:
+
+    if token not in PRECEDENCE:
+        stack.push(token)
+
+    else:
+        op2 = stack.pop()
+        op1 = stack.pop()
+        stack.push(f"({op1} {token} {op2})")
+
+return stack.pop()
+
+
+postfix to prefix
+-----------------
+same if / else. this line changes:
+
+        stack.push(f"{token} {op1} {op2}")
+
+
+prefix to infix
+---------------
+
+stack = Stack()
+
+for token in reversed(expr):
+
+    if token not in PRECEDENCE:
+        stack.push(token)
+
+    else:
+        op1 = stack.pop()
+        op2 = stack.pop()
+        stack.push(f"({op1} {token} {op2})")
+
+return stack.pop()
+
+
+prefix to postfix
+-----------------
+same if / else. this line changes:
+
+        stack.push(f"{op1} {op2} {token}")
+
+
+evaluate postfix
+----------------
+
+stack = Stack()
+
+for token in expr:
+
+    if token.isdigit():
+        stack.push(int(token))
+
+    else:
+        op2 = stack.pop()
+        op1 = stack.pop()
+
+        if token == "+":
+            stack.push(op1 + op2)
+        elif token == "-":
+            stack.push(op1 - op2)
+        elif token == "*":
+            stack.push(op1 * op2)
+        elif token == "/":
+            stack.push(op1 / op2)
+        elif token == "**":
+            stack.push(op1 ** op2)
+
+return stack.pop()
+
+
+evaluate prefix
+---------------
+
+stack = Stack()
+
+for token in reversed(expr):
+
+    if token.isdigit():
+        stack.push(int(token))
+
+    else:
+        op1 = stack.pop()
+        op2 = stack.pop()
+
+        if token == "+":
+            stack.push(op1 + op2)
+        elif token == "-":
+            stack.push(op1 - op2)
+        elif token == "*":
+            stack.push(op1 * op2)
+        elif token == "/":
+            stack.push(op1 / op2)
+        elif token == "**":
+            stack.push(op1 ** op2)
+
+return stack.pop()
+
+
+infix to postfix
+----------------
+PRECEDENCE = {"+": 1, "-": 1, "*": 2, "/": 2, "**": 3}
+
+operators = Stack()
+output = Stack()
+
+for token in expr:
+
+    if token == "(":
+        operators.push(token)
+
+    elif token == ")":
+        while not operators.isEmpty() and operators.peek() != "(":
+            output.push(operators.pop())
+        operators.pop()
+
+    elif token.isalnum():
+        output.push(token)
+
+    else:
+        while not operators.isEmpty() and operators.peek() != "(" and (PRECEDENCE[operators.peek()] > PRECEDENCE[token] or (PRECEDENCE[operators.peek()] == PRECEDENCE[token] and token != "**")):
+            output.push(operators.pop())
+        operators.push(token)
+
+while not operators.isEmpty():
+    output.push(operators.pop())
+
+return output
+
+
+infix to prefix
+---------------
+
+operators = Stack()
+output = Stack()
+
+for token in reversed(expr):
+
+    if token == ")":
+        operators.push(token)
+
+    elif token == "(":
+        while not operators.isEmpty() and operators.peek() != ")":
+            output.push(operators.pop())
+        operators.pop()
+
+    elif token.isalnum():
+        output.push(token)
+
+    else:
+        while not operators.isEmpty() and operators.peek() != ")" and (PRECEDENCE[operators.peek()] > PRECEDENCE[token] or (PRECEDENCE[operators.peek()] == PRECEDENCE[token] and token == "**")):
+            output.push(operators.pop())
+        operators.push(token)
+
+while not operators.isEmpty():
+    output.push(operators.pop())
+
+return output
+
+
+RAW
+one string. S&Q application files
+for char in expression
+
+
+postfix to infix
+----------------
+postfix_to_infix.py
+
+stack = Stack()
+
+for char in expression:
+
+    if char.isspace():
+        continue
+
+    if char not in PRECEDENCE:
+        stack.push(char)
+
+    else:
+        op2 = stack.pop()
+        op1 = stack.pop()
+        stack.push(f"({op1} {char} {op2})")
+
+return stack.pop()
+
+
+postfix to prefix
+-----------------
+postfix_to_prefix.py
+same ifs. this line changes:
+
+        stack.push(f"{char} {op1} {op2}")
+
+
+prefix to infix
+---------------
+prefix_to_infix.py
+
+stack = Stack()
+
+for char in reversed(expression):
+
+    if char.isspace():
+        continue
+
+    if char not in PRECEDENCE:
+        stack.push(char)
+
+    else:
+        op1 = stack.pop()
+        op2 = stack.pop()
+        stack.push(f"({op1} {char} {op2})")
+
+return stack.pop()
+
+
+prefix to postfix
+-----------------
+prefix_to_postfix.py
+same ifs. this line changes:
+
+        stack.push(f"{op1} {op2} {char}")
+
+
+infix to postfix
+----------------
+Infix_to_postfix.py
+PRECEDENCE = {"+": 1, "-": 1, "*": 2, "/": 2, "^": 3}
+
+output = ""
+operator_stack = Stack()
+i = 0
+
+while i < len(expression):
+    char = expression[i]
+
+    if char.isdigit():
+        number = ""
+        while i < len(expression) and expression[i].isdigit():
+            number += expression[i]
+            i += 1
+        output += number + " "
+        i -= 1
+
+    elif char == "(":
+        operator_stack.push(char)
+
+    elif char == ")":
+        while not operator_stack.is_empty() and operator_stack.peek() != "(":
+            output += operator_stack.pop() + " "
+        operator_stack.pop()
+
+    elif char in PRECEDENCE:
+        while not operator_stack.is_empty() and operator_stack.peek() != "(" and PRECEDENCE[operator_stack.peek()] >= PRECEDENCE[char]:
+            output += operator_stack.pop() + " "
+        operator_stack.push(char)
+
+    elif not char.isspace():
+        output += char + " "
+
+    i += 1
+
+while not operator_stack.is_empty():
+    output += operator_stack.pop() + " "
+
+return output.strip()
+
+
+infix to prefix
+---------------
+infix_to_prefix.py
+
+reversed_exp = ""
+
+for char in reversed(expression):
+
+    if char == "(":
+        reversed_exp += ")"
+
+    elif char == ")":
+        reversed_exp += "("
+
+    else:
+        reversed_exp += char
+
+then the infix-to-postfix while on reversed_exp
+( is the open
+
+prefix = output[::-1]

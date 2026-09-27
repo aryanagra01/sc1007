@@ -64,6 +64,24 @@ class BinaryTree:
 
     def _sumGreaterTree(self, node, sum):
     # Write your code here #
+        #reverse in order walk
+
+        current = node
+        stack = []
+
+        while current or stack:
+            while current:
+                stack.append(current)
+                current = current.right
+        
+            current = stack.pop()
+            sum += current.data
+            current.data = sum
+
+            current = current.left
+        
+        return node
+        
 
 bt = BinaryTree()
 

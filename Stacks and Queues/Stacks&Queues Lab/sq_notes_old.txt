@@ -1,0 +1,281 @@
+Stacks and queues — everything written down
+Week 5 tutorial, the lab, the working examples, and the stack/queue questions in assignment 1.
+Updated 23 Sep 2026.
+
+The top of a stack is the head. Push and pop only touch index 0.
+The front of a queue is the head. Enqueue goes at the back. Dequeue takes the front.
+Printing the linked list prints top-to-bottom, or front-to-back.
+
+
+HOW A STACK IS BUILT
+    On a linked list               push = insert at index 0. pop = remove index 0. peek = head.data.
+    On its own top pointer         new node points at the old top, then top moves to the new node.
+
+    push
+    new_node.next = top
+    top = new_node
+    size += 1
+
+    pop
+    data = top.data
+    top = top.next
+    size -= 1
+    return data
+
+    peek
+    return top.data
+
+    empty
+    top is None, or size == 0
+
+
+HOW A QUEUE IS BUILT
+    On a linked list               enqueue = insert at size (the back). dequeue = remove index 0.
+
+    Front and rear (call centre, Queue working example)
+    enqueue
+        new node
+        if empty:
+            front = new node
+        else:
+            rear.next = new node
+        rear = new node
+        size += 1
+
+    dequeue
+        data = front.data
+        front = front.next
+        if front is None:          last item just left, so rear is None too
+            rear = None
+        size -= 1
+        return data
+
+    empty queue: front is None. getFront is front.data.
+
+
+ONLY THE TOP
+You never walk the stack. If it is not the top, it is not yours yet.
+
+    Remove until                    lab
+    Pop while the top is not the value. Stop when it is. The value stays.
+    If the value is not in the stack, you empty it.
+
+    while not stack.is_empty():
+        if stack.peek() != value:
+            stack.pop()
+        else:
+            break
+
+
+PARK IT, THEN PUT IT BACK
+A second stack, or a queue, holds what you are not ready to finish.
+Pop into the temp. Do the real job. Push the temp back.
+A stack reverses whatever you park in it. A queue keeps the order.
+
+    Delete middle of a stack        assignment
+    Pop the top half into a temp stack. Pop the middle once. Push the temp back.
+    depth = size // 2. That many pops, then one more pop, and that one is thrown away.
+
+    For top-to-bottom A B C D E (A is the top), size 5, depth 2.
+    Park A, B. Throw C. Push B, A back. Left: A B D E.
+
+    Even size does the same count. Size 4, depth 2: park two, throw the next one.
+
+    if s.isEmpty():
+        return
+
+    temp = Stack()
+    depth = s.getSize() // 2
+    for _ in range(depth):
+        temp.push(s.pop())
+
+    s.pop()                         the middle, thrown away
+
+    while not temp.isEmpty():
+        s.push(temp.pop())
+
+
+    Reverse a stack                 week 5 tutorial
+    Pop everything into a queue. The queue keeps that order, so the old top is at the front.
+    Dequeue it back onto the stack. The last one pushed is the new top, which was the old bottom.
+
+    top-to-bottom 1 2 3  becomes  3 2 1
+
+    q = Queue()
+    while not stack.isEmpty():
+        q.enqueue(stack.pop())
+    while not q.isEmpty():
+        stack.push(q.dequeue())
+
+
+    Reverse a queue                 working example
+    Dequeue everything onto a stack. The stack's top is the old rear.
+    Pop it back onto the queue. New front is the old rear.
+
+    front-to-back 10 20 30  becomes  30 20 10
+
+    stack = Stack()
+    while not queue.isEmpty():
+        stack.push(queue.dequeue())
+    while not stack.is_empty():
+        queue.enqueue(stack.pop())
+
+
+    Reverse a queue, recursive      lab
+    Dequeue one. Reverse whatever is left. Enqueue that one.
+    The first one out is the last one back in, so it sits at the rear. That is the reverse.
+    Base case: the queue is empty. Do not enqueue anything.
+
+    1 2 3
+        take 1, reverse 2 3, put 1 at the back
+        take 2, reverse 3, put 2 at the back
+        take 3, queue empty, put 3 back
+        then 2, then 1
+    ends as 3 2 1
+
+    if queue.is_empty():
+        return
+    item = queue.dequeue()
+    recursive_reverse(queue)
+    queue.enqueue(item)
+
+    The lab file calls self.recursive_reverse and returns [] on the empty case.
+    It is a plain function. No self. The empty case just returns.
+
+
+    Reverse the first k            week 5 tutorial
+    Dequeue k items onto a stack. Enqueue them back (the stack flips those k).
+    Then rotate the leftover to the back: dequeue and enqueue, size - k times.
+    Do nothing if the queue is empty, k <= 0, or k is bigger than the size.
+
+    1 2 3 4 5, k = 3
+        park 1 2 3. stack top is 3. queue is 4 5
+        enqueue the pops: 4 5 3 2 1
+        rotate the 2 leftovers: 3 2 1 4 5
+
+    if queue is empty or k <= 0 or k > size:
+        return
+
+    stack = Stack()
+    for _ in range(k):
+        stack.push(queue.dequeue())
+
+    while not stack.is_empty():
+        queue.enqueue(stack.pop())
+
+    for _ in range(size - k):       size is still the original size
+        queue.enqueue(queue.dequeue())
+
+    The template writes isEmmpty and isEmpty. The class methods are is_empty.
+
+
+    Sort a stack                    week 5 tutorial
+    Pop one value. Shuffle it into a temp stack that stays sorted, largest on top.
+    If the value is smaller than the temp's top, pop the temp back onto the original
+    until the temp's top is smaller or equal, then push the value.
+    When the original is empty, push the temp back. Smallest ends up on top.
+    Printed top-to-bottom, that is ascending.
+
+    while the original is not empty:
+        data = stack.pop()
+        while temp is not empty and data < temp.peek():
+            stack.push(temp.pop())
+        temp.push(data)
+
+    while temp is not empty:
+        stack.push(temp.pop())
+
+    trace, top-to-bottom 3 1 2
+        pop 3, temp empty, temp = 3
+        pop 1, 1 < 3, so 3 goes back to the original, temp = 1
+        pop 3, 3 is not < 1, temp = 3 1
+        pop 2, 2 < 3, so 3 goes back, temp = 2 1, then 3 is not < 2, temp = 3 2 1
+        push temp back. top-to-bottom 1 2 3
+
+
+    Interleave a queue              assignment
+    Only even length. Odd length, or empty: return the queue as it is.
+    First half stays in order. Second half comes back reversed, woven in.
+    1 2 3 4 5 6  becomes  1 6 2 5 3 4
+
+    half = size // 2
+
+    1) rotate the first half to the back
+        dequeue and enqueue, half times
+        1 2 3 4 5 6  →  4 5 6 1 2 3
+
+    2) park the second half (now at the front) on a stack
+        the stack reverses it. top is 6. queue left: 1 2 3
+
+    3) half times: dequeue one and enqueue it, then pop one and enqueue it
+        1 then 6, 2 then 5, 3 then 4
+        1 6 2 5 3 4
+
+    for _ in range(half):
+        q.enqueue(q.dequeue())
+
+    for _ in range(half):
+        s.push(q.dequeue())
+
+    for _ in range(half):
+        q.enqueue(q.dequeue())
+        q.enqueue(s.pop())
+
+
+SCAN A STRING
+One pass. The stack remembers what you still owe.
+
+    Balanced brackets               lab
+    One stack. Push an opener. On a closer, the top must be its match, then pop it.
+    At the end the stack must be empty. A leftover opener is not balanced.
+    A closer on an empty stack is not balanced (peek is None).
+
+    matcher = {")": "(", "]": "[", "}": "{"}
+
+    for char in expression:
+        if char is an opener:          the values in matcher
+            s.push(char)
+        else:
+            if s.peek() != matcher[char]:
+                return False
+            s.pop()
+    return s.isEmpty()
+
+    ()        push ( , then ) matches, pop. empty. balanced
+    [() ]     [ then ( then pop ( on ) then pop [ on ]. balanced
+    [({{)])   the closers do not match the top. not balanced
+
+    The lab samples are only brackets. Another character is not in matcher.
+
+
+    Word palindrome                 lab
+    Stack and queue. Push and enqueue each letter. Then pop against dequeue.
+    The stack is the word backwards. The queue is the word forwards.
+    Lowercase first. Skip spaces and punctuation. Only letters and digits.
+
+    for char in word:
+        char = char.lower()
+        if char.isalnum():
+            q.enqueue(char)
+            s.push(char)
+
+    while not s.is_empty():
+        if s.pop() != q.dequeue():
+            return False
+    return True
+
+    "A man a plan a canal Panama" → amanaplanacanalpanama, same backwards.
+    The lab file writes isalum(). The method is isalnum().
+
+
+WHICH TECHNIQUE WHEN
+    Only care about the top, stop at a value?     pop while peek is not it. the value stays
+    Throw away the middle of a stack?             park size//2 on a temp stack, pop once, push back
+    Reverse a stack?                              pop into a queue, dequeue back on
+    Reverse a whole queue?                        dequeue onto a stack, pop back on
+    Reverse a queue with recursion?               dequeue one, reverse the rest, enqueue that one
+    Reverse only the first k?                     those k go through a stack, then rotate the rest
+    Sort a stack?                                 temp stack, shuffle until its top is in order
+    Weave the two halves of a queue?              rotate the first half back, park the second on a stack, then one and one
+    Brackets match?                               one stack. push opener, closer must match the top
+    Word the same backwards?                      stack and queue, letters only, pop against dequeue

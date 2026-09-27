@@ -43,7 +43,7 @@ def pop(stack):
 def is_empty(stack):
    return stack.top is None
 
-def postOrderIterativeS2(root):
+def postOrderIterative_visitTwice(root):
     # Your idea: stackMid parks "me", stackRight parks my right child.
     # See each node twice: first go right, second print (left already done).
     stackMid = Stack()
@@ -76,7 +76,7 @@ def postOrderIterativeS2(root):
             current = None
 
 
-def postOrderInterativeS2_correct (root):
+def postOrderIterativeS2(root):
     if root is None:
         return
 

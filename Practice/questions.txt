@@ -1,0 +1,198 @@
+practice questions
+
+open a file, write the function, run the file
+    skip  means you have not written it yet
+    ok    means that sample passed
+    FAIL  means it ran and the answer was wrong
+
+the samples are in the function comments
+this list is every question from the labs, tutorials, assignments, and quiz
+the py files are the ones to try
+the path at the end of a line is the original file, if you want it after you try
+
+
+linked list     01_linked_list.py
+
+    1. remove_at
+        delete by index. head is index 0
+        Linked List Prorgammes / Delet Node using index, and Week 4 removeNode
+
+    2. remove_duplicates_sorted
+        sorted list, drop the extra copies
+        Week 4 Tutorial / removeDuplicatesSortedLL-Template.py
+
+    3. move_max_to_front
+        Week 4 Tutorial / moveMaxToFront_LL-Template.py
+
+    4. move_min_to_front
+        Assigment 1 / moveMinNode - Template.py
+
+    5. move_even_to_back
+        even values go to the back, order inside each group stays
+        Week 4 Tutorial / moveEvenItemsToBack_LL-Template.py
+
+    6. move_odd_to_back
+        odd values go to the back
+        Linked List Lab / move_odd_to_back_Template.py
+
+    7. reverse_doubly
+        reverse, and fix next and prev
+        Assigment 1 / reverseDoublyList - Template.py
+
+    8. is_palindrome
+        Linked List Lab / isPalindrome_Template.py
+
+    9. cycle_length
+        0 if there is no cycle
+        Linked List Lab / cycle_length_Template.py
+
+    10. find_union
+        two sorted lists, new list, unique values, sorted
+        Quiz 1 / 3_findUnion.py
+
+    11. split_even_odd_index
+        split by index, not by the number being even or odd
+        Linked List Lab / split_even_odd_Template.py
+
+
+stacks and queues     02_stacks_queues.py
+
+    12. reverse_stack
+        one queue
+        Week 5 Tutorial / AnsQ1_Template.py
+
+    13. reverse_first_k
+        one stack
+        Week 5 Tutorial / AnsQ2_Template.py
+
+    14. reverse_queue_segment
+        reverse index m to n, one stack
+        Quiz 1 / 1_reverseQueueSegment.py
+
+    15. recursive_reverse
+        Stacks&Queues Lab / recursiveReverse_Template.py
+
+    16. remove_until
+        pop until that value is on top
+        Stacks&Queues Lab / removeUntil_Template.py
+
+    17. delete_middle
+        one extra stack. even length: size // 2 pops, then delete the next
+        Assigment 1 / deleteMiddleElement - Template.py
+
+    18. interleave
+        even length. first half item, then the matching second half item
+        1 2 3 4 5 6 becomes 1 4 2 5 3 6
+        Assigment 1 / interleaveQueue - Template.py
+
+    19. sort_stack
+        largest ends on top. one extra stack
+        Week 5 Tutorial / AnsQ3_Template.py
+
+    20. balanced
+        () [] {} 
+        Stacks&Queues Lab / balanced_Template.py
+
+    21. palindrome
+        one stack and one queue. ignore spaces and case
+        Stacks&Queues Lab / palindrome_Template.py
+
+
+expressions     03_expressions.py
+    tokenised. 12 is one token. ** is one token
+    the written steps are in Stacks and Queues / priority queue notes.txt
+
+    22. infix_to_postfix
+        Quiz 1 / 2_in2postS.py
+
+    23. infix_to_prefix
+        Assigment 1 / in2preS(expr)_Template.py
+
+    24. eval_postfix
+    25. eval_prefix
+    26. postfix_to_infix
+    27. prefix_to_infix
+    28. postfix_to_prefix
+    29. prefix_to_postfix
+        S&Q Applications has a file for each of these
+
+
+trees     04_trees.py
+
+    30. sum_of_leaf_nodes
+        Quiz 1 / 4_sumOfLeafNodes.py
+
+    31. sum_of_non_leaf_nodes
+        Assigent 2 / sumOfNonLeafNodes_Template.py
+
+    32. smallest_value
+        any binary tree, not only a BST
+        Binary Tree Lab / smallest_value_Template.py
+
+    33. print_smaller_values
+        values strictly less than m
+        Binary Tree Lab / printSmallerValues_Template.py
+
+    34. mirror
+        Binary Tree Lab / mirrorTree_Template.py
+
+    35. identical
+        Binary Tree Lab / identical_Template.py
+
+    36. has_grandchild
+        Binary Tree Lab / hasGrandchild_Template.py
+        hasGreatGrandchild_Template.py is the same walk, one level deeper
+
+    37. max_depth
+        empty is 0, one node is 1
+        Binary Tree Tutorial / Q4_Template.py
+
+    38. inorder_iterative
+        one stack
+        Assigent 2 / inorderIterative_Template.py
+
+    39. postorder_one_stack
+        Binary Tree Lab / postOrderIterativeS1_Template.py
+
+    40. postorder_two_stacks
+        Assigent 2 / postOrderIterativeS2_Template.py
+
+    41. preorder_iterative
+        Binary Tree Tutorial / Q3_Template.py
+
+    42. level_order
+        Binary Tree Tutorial / Q2_Template.py
+
+    43. is_bst
+        Binary Search Tree Lab / isBST_Template.py
+
+    44. kth_smallest
+        Binary Search Tree Lab / kthSmallest_Template.py
+
+    45. find_lca
+        Binary Search Tree Lab / findLCA_Template.py
+
+    46. remove_bst
+        three cases: no child, one child, two children
+        Binary Search Tree Lab / removeBSTNode_Template.py
+
+    47. sum_greater_tree
+        each node becomes the sum of the values greater than or equal to it
+        Assigent 2 / sumGreaterTree_Template.py
+
+
+also in the labs, not given a blank function here because they are the helpers
+
+    insert into a BST, recursive
+        Binary Search Tree Lab / insertBSTNode (Recursion)_Template.py
+    insert into a BST, iterative
+        Binary Search Tree Lab / insertBSTNod (Iterative)_Template.py
+    print a BST in order, recursive and iterative
+        Binary Search Tree Lab / printBSTInOrder_Template.py
+
+how to run, from the Practice folder
+
+    python 01_linked_list.py
+    python 02_stacks_queues.py
+    python 03_expressions.py
+    python 04_trees.py
