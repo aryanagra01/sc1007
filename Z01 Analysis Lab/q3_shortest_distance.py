@@ -23,6 +23,34 @@ class Solution:
 
         return [min_distance, best_route]
 
+    def brute_force_tsp(self, distance_matrix):
+
+        #first get the lenght of the totalnumber of locatios
+        n = len(distance_matrix)
+        
+        shortest = float('inf')
+        best_route = []
+
+        for perm in itertools.permutations(range(1, n)): #create permuations from 1 to n-1, 0 not included becaseu its always start and end
+            #permutations() already generates the routes in lexicographic order, hence no equal comparirion later just lesser than
+
+            route = [0] + list(perm) + [0] #0, ... , 0 list convets the tuple to a list
+            total_distance = 0 #initialise total distance
+
+            for i in range(len(route) - 1): #number of gaps is one less
+                total_distance += distance_matrix[route[i]][route[i + 1]]
+                #for each perm, get the distance between each places, i and i+1 posiions from route, and onlky 4 becaseu 4 gaps so no porblem here
+            
+            #no equal than becaseu lexigraphic order, which itertools.permautions handles
+            if total_distance < shortest:
+                shortest = total_distance
+                best_route = route
+        
+        return [shortest, best_route]
+
+        #this is O(n!) time compleixty because brute fourced
+            
+
 if __name__ == "__main__":
     print("Brute-Force Travelling Salesman Program")
     print("=======================================")

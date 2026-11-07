@@ -17,7 +17,26 @@ class Solution:
         
         return selected
         
+    def activity_selection_2(self, start_times: List[int], end_times: List[int]):
+        #create empty event list that we will popoulate with tuples as end, index, start
+        #end first because python sorts by first element
+        events = []
+        for i in range(len(start_times)):
+            events.append((end_times[i], i, start_times[i]))
 
+        #sort the events by end times
+        events.sort()
+        
+        selected = []
+        last_end = float('-inf') #earliest end time always included
+
+        for end, index, start in events:
+            #if the strat is same or greater than the last end
+            if start >= last_end:
+                selected.append(index)
+                last_end = end
+        
+        return selected
 
 
 
